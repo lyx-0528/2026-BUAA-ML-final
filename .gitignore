@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.idea/
+
+# Data (too large for git, share via cloud drive)
+train/
+test/
+
+# Checkpoints (too large for git, share via cloud drive)
+checkpoints/
+
+# Logs
+training.log
+progress.csv
+
+# Output
+submission.csv

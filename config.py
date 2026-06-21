@@ -1,0 +1,48 @@
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+
+TRAIN_IMG_DIR = BASE_DIR / "train" / "images"
+TRAIN_LABEL_FILE = BASE_DIR / "train" / "labels.csv"
+TEST_IMG_DIR = BASE_DIR / "test" / "images"
+SUBMISSION_SAMPLE = BASE_DIR / "submission_sample.csv"
+SUBMISSION_OUTPUT = BASE_DIR / "submission.csv"
+CHECKPOINT_DIR = BASE_DIR / "checkpoints"
+
+IMG_SIZE = (224, 224)
+PATCH_SIZE = 16
+D_MODEL = 768
+NUM_ENCODER_LAYERS = 12
+NUM_DECODER_LAYERS = 4
+NUM_HEADS = 12
+NUM_QUERIES = 5
+NUM_CHARS = 36
+DROPOUT = 0.1
+DROP_PATH = 0.1
+
+BATCH_SIZE = 16
+NUM_EPOCHS = 100
+LR_ENCODER = 1e-4
+LR_DECODER = 5e-4
+WEIGHT_DECAY = 0.05
+WARMUP_EPOCHS = 5
+LABEL_SMOOTHING = 0.1
+GRAD_CLIP = 1.0
+
+LOSS_CHAR_WEIGHT = 1.0
+LOSS_COLOR_WEIGHT = 1.0
+AUX_LOSS_WEIGHT = 0.3
+
+VAL_SPLIT = 0.1
+NUM_WORKERS = 0  # 0 for Windows compatibility; increase on Linux
+
+COLOR_THRESHOLD = 0.5
+
+RANDAUG_N = 2
+RANDAUG_M = 9
+MIXUP_ALPHA = 0.2
+CUTMIX_ALPHA = 1.0
+
+CHAR_CLASSES = list("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+CHAR_TO_IDX = {c: i for i, c in enumerate(CHAR_CLASSES)}
+IDX_TO_CHAR = {i: c for i, c in enumerate(CHAR_CLASSES)}
