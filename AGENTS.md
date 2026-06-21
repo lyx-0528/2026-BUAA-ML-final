@@ -80,3 +80,28 @@ python train.py --resume checkpoints/checkpoint_epoch80.pth
 2. **Windows 兼容** — `num_workers=0`，Windows 下训练速度比 Linux 慢
 3. **RTX 4060 Laptop (8GB)** — 约 13 分钟/epoch，100 epoch ≈ 22 小时
 4. **Python 环境** — 必须用 venv 的 Python，全局 Python 速度慢 77 倍
+
+## 优化方向
+
+### 轻量改动（低成本）
+
+| 参数 | 当前 | 建议 | 理由 |
+|------|------|------|------|
+| `RANDAUG_M` | 9 | 5 | 降低颜色/几何失真 |
+| `MIXUP_ALPHA` | 0.2 | 0（关闭） | 消除训练/测试分布差异 |
+| `CUTMIX_ALPHA` | 1.0 | 0（关闭） | 同上 |
+
+### 中等改动
+
+- 禁用 RandAugment 中 hue 变换，改用自定义增强
+- 增大 epoch 到 150
+- 扫描 color_threshold ∈ [0.3, 0.8] 选最优
+- 推理时用 epoch 95-100 多 checkpoint 投票
+
+### 架构级改动
+
+- Encoder 换 Swin-B（多尺度特征）
+- Decoder 加辅助颜色对比 loss
+- Query 用正弦位置编码初始化（替换随机初始化）
+- 权重 EMA
+- TTA 增加 ±3° 旋转
