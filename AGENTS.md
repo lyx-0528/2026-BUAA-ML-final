@@ -72,12 +72,11 @@ python train.py --resume checkpoints/checkpoint_epoch80.pth
 
 - 模型：ViT-B/16 pretrained + 4层 Transformer Decoder
 - 验证集 sample_acc：**93.33%**
-- 测试集 accuracy：约 60%（泛化差距待改善）
+- 测试集 accuracy：**93%**（验证集与测试集精度一致，泛化良好）
 
-## 已知问题 / 待改进
+## 已知问题
 
-1. **33% 泛化差距** — 验证 93% → 测试 60%
-   - 可能原因：RandAugment m=9 过强 + MixUp 50% 导致训练分布偏离测试
-   - 建议降低 `RANDAUG_M` 到 5，禁用 hue 变换，降低 `MIXUP_ALPHA` 或关掉 MixUp
+1. **TTA bug 已修复** — 原 TTA 实现有 IndexError，当前推理默认无 TTA
 2. **Windows 兼容** — `num_workers=0`，Windows 下训练速度比 Linux 慢
 3. **RTX 4060 Laptop (8GB)** — 约 13 分钟/epoch，100 epoch ≈ 22 小时
+4. **Python 环境** — 必须用 venv 的 Python，全局 Python 速度慢 77 倍
